@@ -96,4 +96,29 @@ bool boggleHelper(const std::set<std::string>& dict, const std::set<std::string>
 {
 //add your solution here!
 
+	if(r>=board.size() || c >= board[0].size()){
+		return false;
+	}
+
+	word += board[r][c];
+	bool foundBigger = false;
+
+
+	if(prefix.find(word) == prefix.end()){
+		if(dict.find(word) != dict.end()){
+			result.insert(word); //not a prefix because found biggest word
+			return true;
+		}
+		return false;
+	}
+	else{
+		foundBigger = boggleHelper(dict,prefix,board,word,result,r+dr,c+dc,dr,dc);
+		if(dict.find(word) != dict.end() && !foundBigger){
+			result.insert(word); //nothing beyond it is bigger valid word so return this valid word
+			return true;
+		}
+	}
+
+	return foundBigger;
+
 }
